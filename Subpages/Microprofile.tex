@@ -1,0 +1,5 @@
+\section{Microprofile}
+
+\subsection{Config-API} 
+
+Die Confg API trennt Anwendungslogik und Konfiguration, sodass der Microservice dynamisch auf die Laufzeitumgebung angepasst werden kann. Dieser Ansatz verbirgt ein Herausforderungen: Konfigurationen wie zum Beispiel für Dateien, Umgebungsvariablen und Datenbank stammen aus heterogenen Quellen. Das führt auch dazu, dass die einzelnen Konfigurationen auch in unterschiedlichen Formaten vorfindbar sind, welches die Administration erschwert. Bei statischen Konfigurationswerten genügt eine Initiierung beim Start des Prozesses. Hingegen beim dynamischen Konfigurationen sollten administrative Maßnahmen ergriffen werden, wie zum Beispiel das Prüfen auf Aktualität der Konfigurationen oder dessen Korrektheit usw. Diese Problematik soll die MicroProfile-Config-API aufgreifen und lösen. Sie ermöglicht die Zugriffvereinheitlichung auf unterschiedliche Konfigurationen, die priorisiert und dadurch Konfigurationen gezielt überschrieben werden können.
