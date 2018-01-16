@@ -13,19 +13,16 @@
 %
 \documentclass[10pt,journal,compsoc]{IEEEtran}
 
-% german package for umlauts
-\usepackage{graphicx}
-\usepackage{ngerman}
-\usepackage[utf8]{inputenc}
 
-% *** CITATION PACKAGES ***
-%
-\ifCLASSOPTIONcompsoc
-  % The IEEE Computer Society needs nocompress option
-  % requires cite.sty v4.0 or later (November 2003)
-  \usepackage[nocompress]{cite}
-\else
-  % normal IEEE
+% german package for umlauts
+\usepackage{graphicx}% *** CITATION PACKAGES ***
+\usepackage{ngerman}%
+\usepackage[utf8]{inputenc}\ifCLASSOPTIONcompsoc
+\usepackage{dingbat}  % The IEEE Computer Society needs nocompress option
+\usepackage{longtable}  % requires cite.sty v4.0 or later (November 2003)
+\usepackage{float}  \usepackage[nocompress]{cite}
+%\usepackage[breaklinks]{hyperref}\else
+\usepackage{url}  % normal IEEE
   \usepackage{cite}
 \fi
 

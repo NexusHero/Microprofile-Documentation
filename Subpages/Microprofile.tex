@@ -1,12 +1,34 @@
 \section{Microprofile}
+Aktuell gibt es die Version 1.2 von Microprofile, welches die Features in Abbildung \ref{fig:features} aufzeigt.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=1.0\linewidth]{images/Microprofile12}
+	\caption{Microprofile-2.0-Features \cite{Microprofile.2017}} %Generelle
+	\label{fig:features}
+\end{figure}
 
 \subsection{Config-API} 
-
-Die Confg API trennt Anwendungslogik und Konfiguration, sodass der Microservice dynamisch auf die Laufzeitumgebung angepasst werden kann. Dieser Ansatz verbirgt ein Herausforderungen: Konfigurationen wie zum Beispiel für Dateien, Umgebungsvariablen und Datenbank stammen aus heterogenen Quellen. Das führt auch dazu, dass die einzelnen Konfigurationen auch in unterschiedlichen Formaten vorfindbar sind, welches die Administration erschwert. Bei statischen Konfigurationswerten genügt eine Initiierung beim Start des Prozesses. Hingegen beim dynamischen Konfigurationen sollten administrative Maßnahmen ergriffen werden, welche zur Laufzeit erfolgen müssen, wie zum Beispiel das Prüfen auf Aktualität und Korrektheit der Konfigurationen. Diese Problematik soll die MicroProfile-Config-API aufgreifen und lösen. Sie ermöglicht die Zugriffvereinheitlichung auf unterschiedliche Konfigurationen, die wiederum priorisiert und dadurch gezielte Konfigurationsüberschreibung möglicht wird. Standardwerte werden in einer „microprofile-config.properties“ abgelegt .Diese können dann bedarfsgerecht angezogen und in der Umgebung überschrieben werden. Auch das Einbinden von weiteren Quellen ist möglich.
+Die Confg-API trennt Anwendungslogik und Konfiguration. Dadurch kann ein Microservice dynamisch auf die Laufzeitumgebung angepasst werden. Bei diesem Ansatz stellt die Konfiguration von heterogenen Quellen, wie beispielsweise Umgebungsvariablen und Datenbanken, eine Herausforderung dar. Dabei können diese Konfigurationen in unterschiedlichen Datenformaten vorliegen, was die Administration zusätzlich erschwert. Bei statischen Konfigurationswerten genügt eine Initiierung beim Start des Prozesses. 
+%Hingegen beim dynamischen Konfigurationen sollten administrative Maßnahmen ergriffen werden, welche zur Laufzeit erfolgen müssen, wie zum Beispiel das Prüfen auf Aktualität und Korrektheit der Konfigurationen. 
+Diese Problematik greift Config-API auf. Sie ermöglicht die Zugriffsvereinheitlichung auf unterschiedliche Konfigurationen, die wiederum priorisiert und dadurch gezielte Konfigurationsüberschreibung möglicht wird. Standardwerte werden in einer \texttt{microprofile-config.properties} abgelegt .Diese können dann bedarfsgerecht angezogen und in der Umgebung überschrieben werden. Auch das Einbinden von weiteren Quellen ist möglich.
 Die Zugriffsverwaltung auf die Konfigurationen können auf zwei Wegen geschehen: ConfigProvider und ConfigBuilder. Um diese umsetzen zu können benötigt es davor die Instanziierung der Config-Klasse. Der Builder erlaubt die individuelle Anpassung der Konfiguration und die Instanz wird nicht gecached. Beim ConfigProvider gilt es zu erwähnen, dass beim Aufruf der Methode getConfig(), die zurückgelieferte Konfigurations-Instanz - aus Effizienzgründen - gecached wird. Dies müsste bei paralleler Programmierung beachtet werden. Der Zugriff kann allerdings auch über CDI-Injection-Annotationen geschehen. Sobald ein Konfigurationswert durch den Schlüssel nicht gefunden wird, reagiert das System mit einer NoSuchElement-Exception. Bei CDI-Injection wird Deployment-Exception geworfen. Auch optionale Konfiguration kann durch die Methode getOptionalValue().orelse() in Betracht gezogen, sodass im Zweifelsfall eine andere Konfiguration angezogen werden kann. 
 
-\subsection{Just-In-Time-Konfiguration} 
+\subsubsection{Just-In-Time-Konfiguration} 
 Damit ein Microservice bei Konfigurationsänderung nicht neugestartet werden muss, bietet die Config-API ein Mechanismus an, sodass Konfigurationswerte dynamisch zur Laufzeit geladen werden können. Um den aktuellen Konfigurationswert zu erhalten und nicht den Wert zum Zeitpunkt der Injection, sollte, muss ein Provider injiziert werden. Dadurch wird immer der aktuelle Wert angezogen. Just-in-Time steht in diesem Zusammenhang für die Aktualität des Konfigurationswertes. Die Aktualisierung der Werte innerhalb der Quelle und darauf bezogen das Refresh ist dem Autor der ConfigSource-Klasse überlassen. 
 
-\subsection{Converter}
-Durch den Converter können die Konfigurationswerte, welche ausschließlich aus Strings besteht, in Javatypen konvertiert, sodass auch andere Typen als Strings verwendet werden können. Bereits für einige Javatypen gibt es den Build-in-Converter. Es werden Typen, wie zum Beispiel Boolean, Integer, Long, Double, URL und LocalDateTime, unterstützt.
+\subsubsection{Converter}
+Durch den Converter können die Konfigurationswerte, welche ausschließlich aus Strings besteht, in Javatypen konvertiert, sodass auch andere Typen als Strings verwendet werden können. Bereits für einige Javatypen gibt es den Build-in-Converter. Es werden Typen wie beispielsweise Boolean, Integer, Long, Double, URL und LocalDateTime unterstützt.
+
+\subsection{HealthCheck-API} \label{healthcheck}
+Die HealthCheck-API ermöglicht, dass der aktuelle Status eines Services abgefragt werden kann. Dabei fallen Antworten im Form von 'Up' sowie 'Down' an. Falls der Service nicht verfügbar sein sollte, können hier Maßnahmen, wie beispielsweise das Neustarten, zur Erhaltung der Systemstabilität ergriffen werden. Um diese Funktion nutzen zu können, sollte die entsprechende Schnittstelle implementiert werden \cite{LarsRowekamp.2017}. Des Weiteren wird durch die Annotation \texttt{\@ Health} eine automatische REST-API-Funktion zur Verfügung gestellt. Auf Basis dieser Funktion können Monitoring- und Management-Tools durch Rest-Calls automatisiert überprüfen, ob ein Neustart erforderlich ist. Diese API sieht den Einsatz in Container-basierten Umgebungen, statt manuellen Gebrauch, vor (Machine-To-Machine) \cite{LarsRowekamp.2017c}.  
+
+\subsection{FaultTolerance-API} \label{faulttolerance}
+Die FaultTolerance-API hat den Zweck, eine verbesserte Systemstabilität zu erreichen. Des Weiteren können Resilience-Patterns wie beispielsweise Fallback, Timeout oder Bulkhead auf Basis von Java-Annotationen umgesetzt werden. Aber auch die Ausprogrammierung dieser Patterns ist möglich. Dadurch erhöht sich die Verfügbarkeit eines Microservices \cite{ibm.2017}.
+
+\subsection{Metrics}
+Gegensatz zur HealthCheck-API dient die Metrics-API dazu, fein granulare Systeminformationen und kritische Systemparameter zur Laufzeit zu überwachen. Diese Überwachung geschieht durch Softwareagenten, wodurch Prognosen über künftige Serviceverhalten erstellt werden kann. Durch Einsatz von Contexts und Dependency Injection kann diese Funktionalität verwendet werden. Auf diese Weise lässt sich zum Beispiel auf eine erhöhte Auslastung mit dem Start neuer Service-Instanzen oder proaktiv auf sich abzeichnende Engpässe reagieren \cite{LarsRowekamp.2017c}. 
+
+\subsection{Json Web Token (JWT) Propagation}
+%1:1 kopiert
+Diese API bietet die Authentifizierung und Autorisierung innerhalb eines Microservices an. Mit entsprechenden Authorization-Header (mit Token) sind beispielsweise Token-Gültigkeit, den Token-Aussteller und Token-Autoritär möglich. Innerhalb eines JAX-RS-Containers können durch Annotationen auf Instanz des JWT sowie Claims zugegriffen werden. Hier lassen sich Java-EE-Funktionalitäten wie zum Beispiel RolesAllowed gemeinsam mit JWT nutzen. Dies ist aufgrund von automatisches Mapping auf den Java EE SecurityContext möglich \cite{LarsRowekamp.2017b}. 
