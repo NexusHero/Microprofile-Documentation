@@ -1,16 +1,17 @@
 \section{Microprofile}
+Optimierungen erfolgen bisher durch recht triviale Ansätze. Ist der Anwendungsserver zu groß werden lediglich die benötigten Komponenten verwendet, die zwingend für den Microservice gebraucht werden. Diese Ansätze haben allerdings immer noch Schwachstellen, wie bereits aus dem obigen Kapitel hervorgegangen ist. Java EE MicroProfile wurde somit angekündigt, welches bei seiner initialen Version lediglich einen minimalen Satz an APIs zur Verfügung stellt. Somit enthielt die erste Version von MicroProfile JAX-RS für die Verwendung von REST, CDI und JSON-P. Dies reichte für einen Microservice ohne eigene Benutzeroberfläche aus. Bei Bedarf können zusätzliche APIs hinzugefügt werden. \\ \\
+
 Aktuell gibt es die Version 1.2 von Microprofile, welches die Features in Abbildung \ref{fig:features} aufzeigt.
 
 \begin{figure}[h!]
 	\centering
-	\includegraphics[width=1.0\linewidth]{images/Microprofile12}
+	\includegraphics[width=1.0\linewidth]{images/Microprofile13}
 	\caption{Microprofile-2.0-Features \cite{Microprofile.2017}} %Generelle
 	\label{fig:features}
 \end{figure}
 
 \subsection{Config-API} 
-Die Confg-API trennt Anwendungslogik und Konfiguration. Dadurch kann ein Microservice dynamisch auf die Laufzeitumgebung angepasst werden. Bei diesem Ansatz stellt die Konfiguration von heterogenen Quellen, wie beispielsweise Umgebungsvariablen und Datenbanken, eine Herausforderung dar. Dabei können diese Konfigurationen in unterschiedlichen Datenformaten vorliegen, was die Administration zusätzlich erschwert. Bei statischen Konfigurationswerten genügt eine Initiierung beim Start des Prozesses. 
-%Hingegen beim dynamischen Konfigurationen sollten administrative Maßnahmen ergriffen werden, welche zur Laufzeit erfolgen müssen, wie zum Beispiel das Prüfen auf Aktualität und Korrektheit der Konfigurationen. 
+Die Confg-API trennt Anwendungslogik und Konfiguration. Dadurch kann ein Microservice dynamisch auf die Laufzeitumgebung angepasst werden. Bei diesem Ansatz stellt die Konfiguration von heterogenen Quellen, wie beispielsweise Umgebungsvariablen und Datenbanken, eine Herausforderung dar. Dabei können diese Konfigurationen in unterschiedlichen Datenformaten vorliegen, was die Administration zusätzlich erschwert. Bei statischen Konfigurationswerten genügt eine Initiierung beim Start des Prozesses. Hingegen beim dynamischen Konfigurationen sollten administrative Maßnahmen ergriffen werden, welche zur Laufzeit erfolgen müssen, wie zum Beispiel das Prüfen auf Aktualität und Korrektheit der Konfigurationen. 
 Diese Problematik greift Config-API auf. Sie ermöglicht die Zugriffsvereinheitlichung auf unterschiedliche Konfigurationen, die wiederum priorisiert und dadurch gezielte Konfigurationsüberschreibung möglicht wird. Standardwerte werden in einer \texttt{microprofile-config.properties} abgelegt .Diese können dann bedarfsgerecht angezogen und in der Umgebung überschrieben werden. Auch das Einbinden von weiteren Quellen ist möglich.
 Die Zugriffsverwaltung auf die Konfigurationen können auf zwei Wegen geschehen: ConfigProvider und ConfigBuilder. Um diese umsetzen zu können benötigt es davor die Instanziierung der Config-Klasse. Der Builder erlaubt die individuelle Anpassung der Konfiguration und die Instanz wird nicht gecached. Beim ConfigProvider gilt es zu erwähnen, dass beim Aufruf der Methode getConfig(), die zurückgelieferte Konfigurations-Instanz - aus Effizienzgründen - gecached wird. Dies müsste bei paralleler Programmierung beachtet werden. Der Zugriff kann allerdings auch über CDI-Injection-Annotationen geschehen. Sobald ein Konfigurationswert durch den Schlüssel nicht gefunden wird, reagiert das System mit einer NoSuchElement-Exception. Bei CDI-Injection wird Deployment-Exception geworfen. Auch optionale Konfiguration kann durch die Methode getOptionalValue().orelse() in Betracht gezogen, sodass im Zweifelsfall eine andere Konfiguration angezogen werden kann. 
 
@@ -31,3 +32,9 @@ Gegensatz zur HealthCheck-API dient die Metrics-API dazu, fein granulare Systemi
 
 \subsection{Json Web Token (JWT) Propagation}
 Diese API bietet die Authentifizierung und Autorisierung innerhalb eines Microservices an. Mit entsprechenden Authorization-Header (mit Token) sind beispielsweise Token-Gültigkeit, den Token-Aussteller und Token-Autoritär möglich. Innerhalb eines JAX-RS-Containers können durch Annotationen auf Instanz des JWT sowie Claims zugegriffen werden. Hier lassen sich Java-EE-Funktionalitäten wie zum Beispiel RolesAllowed gemeinsam mit JWT nutzen. Dies ist aufgrund von automatisches Mapping auf den Java EE SecurityContext möglich \cite{LarsRowekamp.2017b}. 
+
+
+\subsection{OpenAPI und OpenTracing-API}
+Durch OpenAPI können OpenAPI-V3-Dokumente aus JAX-RS-Applikationen erstellt und als unabhängige Beschreibungsformat für REST APIs genutzt werden. Diese API hat den Zweck, eine automatisierte Generierung von Microservices-APIs bereitzustellen. Das erlaubt die Verwaltung über API-Management-Werkzeugen.
+OpenTracing-API wird versucht ein Standard bzgl. verteiltes Tracing zu setzen. Hierdurch können Requests nachverfolgt werden \cite{DominikMohilo2018}.  
+
