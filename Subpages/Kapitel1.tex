@@ -1,13 +1,11 @@
 \section{Java EE und Microservices}
-Aus rein technologischer Sicht bietet Java EE alles, was für eine Microservice-basierte Architektur erforderlich ist. Das wird bereits klar, wenn die verfügbaren APIs betrachtet werden [1]. Microservices ergeben sich unter Berücksichtigung folgenden Eigenschaften, welche zudem Indikatoren für die Größe darstellen [5].
-
+Aus rein technologischer Sicht bietet Java EE alles, was für eine Microservice-basierte Architektur erforderlich ist. Das wird bereits klar, wenn die verfügbaren APIs betrachtet werden \cite{jaxcenter.2016}. Microservices ergeben sich unter Berücksichtigung folgenden Eigenschaften, welche zudem Indikatoren für die Größe darstellen [5].                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  em Teamgröße
 \begin{itemize}
-	\item Teamgröße
-	\item Modularisierung
-	\item Ersetzbarkeit
-	\item Transaktionen und Konsistenz
-	\item Infrastruktur
-	\item Verteilte Kommunikation	
+\item Modularisierung
+\item Ersetzbarkeit
+\item Transaktionen und Konsistenz
+\item Infrastruktur
+\item Verteilte Kommunikation	
 \end{itemize}
 
 Soll nun ein Microservice mit Java EE implementiert werden, könnten diese Indikatoren ebenfalls herangezogen werden. Die Anzahl der Teammitglieder beschränkt die Größe der Komponente. Sie beinhaltet dabei so viel Logik, dass sie von einem Team entwickelt und betrieben werden kann. Der Dienst lässt sich so unabhängig von anderen Teams implementiert und in Produktion bringen. Auch die Komplexität ist handhabbar, wenn der Service als Modul entwickelt wird und lässt sich somit auch ersetzen, sollte dies von Nöten sein. Die Transaktion, welche die ACID-Eigenschaften verfolgt, kann ebenfalls entsprechend implementiert werden. Die Kommunikation über leichtgewichtige Mechanismen ergibt sich durch diesen Ansatz [5]. Da sie Teil eines verteilten Systems sind, bedienen sich über die verteilte Kommunikation einer anderen Fachlichkeit oder stellen anderen Services die eigene zur Verfügung. Microservices sollen eine geschlossene Fachlichkeit abbilden (Bounded Context), um sich eindeutig von anderen Services abzugrenzen.\\ 
