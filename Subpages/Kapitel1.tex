@@ -17,18 +17,18 @@ Die oben aufgeführten Punkte sind Ansätze für Continuous Delivery. Diese Disz
 Leichtgewichtige Server, die nur Bestandteile mit sich bringen, welche für den Service benötigt werden, würden Abhilfe schaffen \cite{jaxcenter.2016}. Denkbar wäre hier als erster Ansatz das separate Packen der Anwendungen, welche anschließend auf dem Server deployt werden. Die durch den Server können sich die Dienste die zur Verfügung gestellte Infrastruktur teilen. Microservices sollen allerdings alle in einem eigenen Prozess unabhängig voneinander laufen. Diese Unabhängigkeit kann durch den eben genannten Ansatz nicht realisiert werden. Das Deployment eines Service würde das Laufzeitverhalten der anderen Dienste beeinflussen. Fällt der Server aus oder weist ein Fehlverhalten durch einen defekten Service auf, können die anderen Dienste ebenfalls nicht mehr erreicht werden [x].\\
 \begin{figure}[h!]
 	\centering
-	\includegraphics[width=1.0\linewidth]{images/mp}
+	\includegraphics[width=1.0\linewidth]{images/mp1}
 	\caption{Deployment in Application Server [x]}
 	\label{fig:mp1}
 \end{figure}
 
 \section{Die Optimierung von Java EE}
-Um Dienste auf Basis von Java EE bezüglich der Unabhängigkeit zu optimieren, wäre es denkbar jede Komponente in einen eigenen Server zu deployen. Jeder Dienst hat somit seine eigene Infrastruktur. Dies wird in Abbildung (...) illustriert. Wie bereits erwähnt handelt es sich bei Microservices oft um etliche Service-Instanzen und deployments. Bei  
+Um Dienste auf Basis von Java EE bezüglich der Unabhängigkeit zu optimieren, wäre es denkbar jede Komponente in einen eigenen Server zu deployen. Jeder Dienst hat somit seine eigene Infrastruktur. Dies wird in Abbildung (...) illustriert. Wie bereits erwähnt handelt es sich bei Microservice-basierten Systemen oft um etliche Service-Instanzen und deployments. Bei diesem Ansatz  
 
 
 \begin{figure}[h!]
 	\centering
-	\includegraphics[width=1.0\linewidth]{images/mp}
+	\includegraphics[width=1.0\linewidth]{images/mp2}
 	\caption{Dienste mit eigener Infrastruktur [x]}
 	\label{fig:mp2}
 \end{figure}
