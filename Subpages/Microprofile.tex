@@ -1,15 +1,11 @@
 \section{Microprofile}
-Optimierungen erfolgen bisher durch recht triviale Ansätze. Ist der Anwendungsserver zu groß werden lediglich die benötigten Komponenten verwendet, die zwingend für den Microservice gebraucht werden. Diese Ansätze haben allerdings immer noch Schwachstellen, wie bereits aus dem obigen Kapitel hervorgegangen ist. Java EE MicroProfile wurde somit angekündigt, welches bei seiner initialen Version lediglich einen minimalen Satz an APIs zur Verfügung stellt. Somit enthielt die erste Version von MicroProfile JAX-RS für die Verwendung von REST, CDI und JSON-P. Dies reichte für einen Microservice ohne eigene Benutzeroberfläche aus. Bei Bedarf können zusätzliche APIs hinzugefügt werden. \\ \\
-
-Aktuell gibt es die Version 1.2 von Microprofile, welches die Features in Abbildung \ref{fig:features1.3} aufzeigt.
-
+Optimierungen erfolgen bisher durch recht triviale Ansätze. Ist der Anwendungsserver zu groß werden lediglich die benötigten Komponenten verwendet, die zwingend für den Microservice gebraucht werden. Diese Ansätze haben allerdings immer noch Schwachstellen, wie bereits aus dem obigen Kapitel hervorgegangen ist. Java EE MicroProfile wurde somit angekündigt, welches bei seiner initialen Version lediglich einen minimalen Satz an APIs zur Verfügung stellt. Aktuell werden die Funktionen angeboten, welche in Abbildung \ref{fig:features1.3} aufzeigt.  \\ \\
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=1.0\linewidth]{images/Microprofile13}
 	\caption{Microprofile-1.3-Features \cite{Microprofile.2017}} %Generelle
 	\label{fig:features1.3}
 \end{figure}
-
 \subsection{Config-API} 
 Die Confg-API trennt Anwendungslogik und Konfiguration. Dadurch kann ein Microservice dynamisch auf die Laufzeitumgebung angepasst werden. Bei diesem Ansatz stellt die Konfiguration von heterogenen Quellen, wie beispielsweise Umgebungsvariablen und Datenbanken, eine Herausforderung dar. Dabei können diese Konfigurationen in unterschiedlichen Datenformaten vorliegen, was die Administration zusätzlich erschwert. Bei statischen Konfigurationswerten genügt eine Initiierung beim Start des Prozesses. Hingegen beim dynamischen Konfigurationen sollten administrative Maßnahmen ergriffen werden, welche zur Laufzeit erfolgen müssen, wie zum Beispiel das Prüfen auf Aktualität und Korrektheit der Konfigurationen. 
 Diese Problematik greift Config-API auf. Sie ermöglicht die Zugriffsvereinheitlichung auf unterschiedliche Konfigurationen, die wiederum priorisiert und dadurch gezielte Konfigurationsüberschreibung möglicht wird. Standardwerte werden in einer \texttt{microprofile-config.properties} abgelegt .Diese können dann bedarfsgerecht angezogen und in der Umgebung überschrieben werden. Auch das Einbinden von weiteren Quellen ist möglich.
