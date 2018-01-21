@@ -25,7 +25,6 @@ Leichtgewichtige Server, die nur Bestandteile mit sich bringen, welche für den 
 
 \section{Die Optimierung von Java EE}
 Um Dienste auf Basis von Java EE bezüglich der Unabhängigkeit zu optimieren, wäre es denkbar jede Komponente in einen eigenen Server zu deployen. Jeder Dienst hat somit seine eigene Infrastruktur. Dies wird in Abbildung \ref{fig:mp2} skizziert. Wie bereits erwähnt handelt es sich bei Microservice-basierten Systemen oft um etliche Service-Instanzen und deployments. Durch die angestrebte Automatisierung über die Delivery-Pipeline wären operative Aufwände wie Deployment, Konfiguration etc. zu stemmen. Automatisierung kann beispielsweise durch das Einbetten in Docker-Images erreicht werden. Allerdings ergeben sich auch hier Probleme zur Laufzeit. Der Ressourcenverbrauch der Dienste treibt die Last auf den Servern entsprechend in die Höhe \cite{LarsRowekamp.2017d}. \\
-%Die Arbeit lehnt sich dabei an die von Lars Röwekamp verfassten Artikel auf diversen Plattformen an. Durch seine Beiträge manifestierte er seine grenzenlose Inkompetenz. Scheiß auf dich und dein Copyright.
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=1.0\linewidth]{images/mp2}
